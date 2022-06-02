@@ -25,6 +25,16 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (DataManager.Instance != null)
+        {
+
+            if (DataManager.Instance.highscoreList.Count > 0)
+            {
+               
+                DataManager.Instance.changeBestScore.Invoke(DataManager.Instance.highscoreList[0]);
+            }
+        }
+        
 
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
@@ -64,6 +74,7 @@ public class MainManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                
             }
         }
     }
@@ -78,7 +89,18 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        DataManager.Instance.currentPlayer.Score = m_Points;
+        DataManager.Instance.updateScore();
+        if (DataManager.Instance.highscoreList.Count > 0)
+        {
+           
+            DataManager.Instance.changeBestScore.Invoke(DataManager.Instance.highscoreList[0]);
+        }
+        
+
     }
+
+
    
 
 }

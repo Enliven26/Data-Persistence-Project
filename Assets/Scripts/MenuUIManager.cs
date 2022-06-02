@@ -21,6 +21,7 @@ public class MenuUIManager : SceneFlow
                 if (DataManager.Instance.isPause)
                 {
                     startButtonText.text = "Continue";
+                    
                 }
 
                 else
@@ -35,8 +36,10 @@ public class MenuUIManager : SceneFlow
         {
             startButtonText.text = "Start";
         }
-        Debug.Log(DataManager.Instance.currentPlayer.Name);
+
         nameInput.text = DataManager.Instance.currentPlayer.Name;
+        
+
     }
 
     // Update is called once per frame
@@ -53,12 +56,18 @@ public class MenuUIManager : SceneFlow
     {
 
         DataManager.Instance.currentPlayer.Name = nameInput.text;
-        Debug.Log(DataManager.Instance.currentPlayer.Name);
+
+        Time.timeScale = 1;
+        DataManager.Instance.isPause = false;
+        
+      
        
     }
 
     public void Quit()
     {
+        DataManager.Instance.Save();
+
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
